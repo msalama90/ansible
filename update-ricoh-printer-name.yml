@@ -1,0 +1,16 @@
+---
+- name: Update Printer Names via SNMP
+  hosts: printers
+  gather_facts: no
+
+  tasks:
+    - name: Set printer name
+      ansible.snmp.set:
+        connection: ansible.snmp.v1
+        community: "admin"
+        host: "{{ ansible_host }}"
+        oids:
+          - oid: "1.3.6.1.4.1.367.3.2.1.6.1.1.7.1"
+            iid: "0"
+            type: "OCTETSTR"
+            value: "{{ printer_name }}"
